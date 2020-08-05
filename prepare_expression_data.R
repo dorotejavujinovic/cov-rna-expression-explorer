@@ -1,7 +1,5 @@
-library(tidyr)
 library(ggplot2)
 library(tidyverse)
-library(patchwork)
 data_wide <- read.delim("C:/famnit/genialis/data/GSE33267_scl005_EXPRS.txt.gz", 
                         header = TRUE, 
                         stringsAsFactors = FALSE)
