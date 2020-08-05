@@ -1,1 +1,2 @@
-"# genialis" 
+My first Shiny app
+-----
