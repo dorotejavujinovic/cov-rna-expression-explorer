@@ -27,8 +27,3 @@ final$time_point <- factor(final$time_point,
 
 save(final, annotations, file = "data/appdata.RData")
 
-
-p <- ggplot(final, aes(x=time_point, y=value)) + 
-  geom_violin() 
-
-save(p, file = "plots/violinplot.RData")
