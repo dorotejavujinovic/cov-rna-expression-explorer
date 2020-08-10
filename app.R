@@ -26,8 +26,8 @@ server <- function(input, output, session) {
   output$violin <- renderPlot({ p + layer(geom = "point", stat = "identity",
                                           position = "identity",
                                           data = dfg())  +
-    stat_summary(data = dfg(), fun = mean, geom = "point", size = 2, color = "red") +
-      stat_summary(data = dfg() , fun = mean, geom = "line", aes(group = 1))
+      stat_summary(data = dfg(), fun = mean, geom = "point", size = 2, color = "red") +
+      stat_summary(data = dfg(), fun = mean, geom = "line", aes(group = 1))
     
   })
 }
