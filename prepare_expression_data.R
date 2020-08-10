@@ -1,7 +1,5 @@
-library(tidyr)
 library(ggplot2)
 library(tidyverse)
-library(patchwork)
 data_wide <- read.delim("C:/famnit/genialis/data/GSE33267_scl005_EXPRS.txt.gz", 
                         header = TRUE, 
                         stringsAsFactors = FALSE)
@@ -24,6 +22,6 @@ final$time_point <- factor(final$time_point,
                                       "24H", "30H", "36H",
                                       "48H", "54H", "60H", "72H"))
 
-
-save(final, annotations, file = "data/appdata.RData")
+p <- ggplot(final, aes(x = time_point, y = value)) + geom_violin()
+save(final, annotations, p, file = "data/appdata.RData")
 

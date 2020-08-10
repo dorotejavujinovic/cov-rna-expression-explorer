@@ -2,8 +2,9 @@ library(vroom)
 library(shiny)
 library(tidyverse)
 library(ggplot2)
-inputdata <- load("data/appdata.RData")
+load("data/appdata.RData")
 genes <- unique(final$GENE_SYMBOL)
+
 
 ui <- fluidPage(
   titlePanel("Gene expression over time"),
@@ -13,14 +14,21 @@ ui <- fluidPage(
                   choices = NULL, multiple = FALSE)
     ),
     mainPanel(
-      tableOutput("idk")
+      plotOutput("violin")
     )
   )
 )
 server <- function(input, output, session) {
   updateSelectizeInput(session, inputId = "gene", choices = genes, server = TRUE)
-  
-  output$idk <- renderTable(final%>%filter(GENE_SYMBOL == input$gene))
-  
+  dfg <- reactive({ subset(final, GENE_SYMBOL %in% input$gene)
+    
+  })
+  output$violin <- renderPlot({ p + layer(geom = "point", stat = "identity",
+                                          position = "identity",
+                                          data = dfg())  +
+      stat_summary(data = dfg(), fun = mean, geom = "point", size = 2, color = "red") +
+      stat_summary(data = dfg(), fun = mean, geom = "line", aes(group = 1))
+    
+  })
 }
 shinyApp(ui,server)
