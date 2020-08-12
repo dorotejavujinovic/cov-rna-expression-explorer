@@ -1,7 +1,8 @@
 library(shiny)
 library(tidyr)
 library(ggplot2)
-load("data/appdata.RData")
+if (!(exists("p") && exists("final") && exists("annotations") ))
+  load("data/appdata.RData")
 genes <- unique(final$gene_symbol)
 
 
