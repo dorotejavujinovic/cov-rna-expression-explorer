@@ -24,11 +24,13 @@ server <- function(input, output, session) {
   output$violin <- renderPlot({ 
     req(input$gene)
     dfg <- final[final$gene_symbol %in% input$gene, ]
+    dfgh <-  group_by(dfg, gene_symbol, time_point) %>%
+      summarise(value = mean(value))
     p + 
       geom_point(data = dfg, aes(color = factor(gene_symbol)), show.legend = TRUE)  +
-      stat_summary(data = dfg, fun = mean, geom = "point", size = 2, color = "red") +
-      stat_summary(data = dfg, fun = mean, geom = "line", aes(group = 1))
-    
+      geom_point(data = dfgh, size = 2, color = "red") +
+      stat_summary(data = dfg, fun = mean, geom = "line", aes(group = gene_symbol, color = factor(gene_symbol)))
+     
   })
 }
 
